@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit Copa do Mundo · Dalme Brasil</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CC80;
+    --dark: #0D0D0D;
+    --dark2: #141414;
+    --dark3: #1C1C1C;
+    --border: rgba(201,168,76,0.2);
+    --border-strong: rgba(201,168,76,0.5);
+    --text: #F0EDE6;
+    --text-muted: #8A8070;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  /* ── TELA DE SENHA ── */
+  #lockScreen {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .lock-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  .lock-ornament {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+  }
+
+  .lock-ornament svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--gold);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lock-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .lock-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+  }
+
+  .pw-input {
+    width: 100%;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    letter-spacing: 8px;
+    text-align: center;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .pw-input:focus { border-color: var(--gold); }
+  .pw-input::placeholder { letter-spacing: 4px; color: var(--text-muted); font-size: 14px; }
+
+  .btn-enter {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 13px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-enter:hover { background: rgba(201,168,76,0.08); }
+
+  .lock-error {
+    font-size: 12px;
+    color: #C05050;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    display: none;
+  }
+
+  /* ── CONTEÚDO ── */
+  #contentScreen {
+    display: none;
+    width: 100%;
+    max-width: 480px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .content-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .content-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .content-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-wrap {
+    margin-bottom: 2rem;
+  }
+
+  /* Instrução de uso */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .how-step {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .how-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .how-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Âncora */
+  .anchor-card {
+    background: var(--dark2);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .anchor-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .anchor-icon svg {
+    width: 20px; height: 20px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .anchor-info { flex: 1; }
+
+  .anchor-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+
+  .anchor-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  .btn-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 7px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-dl:hover { background: rgba(201,168,76,0.08); }
+
+  .btn-dl svg {
+    width: 13px; height: 13px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* QR Cards */
+  .qr-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .qr-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .qr-card:hover { border-color: var(--border-strong); }
+
+  .qr-placeholder {
+    width: 56px;
+    height: 56px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  .qr-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .qr-info { flex: 1; min-width: 0; }
+
+  .qr-badge {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+
+  .qr-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .qr-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  /* Carta de drinks */
+  .carta-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .carta-link:hover { border-color: var(--gold); }
+
+  .carta-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .carta-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .carta-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .carta-desc { font-size: 11px; color: var(--text-muted); }
+
+  .carta-arrow {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 18px;
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding-bottom: 1rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── ADICIONAR QR (modo edição) ── */
+  .add-qr-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    margin-top: 8px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- TELA DE SENHA -->
+<div id="lockScreen">
+  <div class="lock-brand">Dalme Brasil</div>
+
+  <div class="lock-ornament">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </div>
+
+  <h1 class="lock-title">Área exclusiva</h1>
+  <p class="lock-sub">Kit Copa do Mundo · 2026</p>
+
+  <input class="pw-input" type="password" id="pw" placeholder="senha" maxlength="20" autocomplete="off">
+  <button class="btn-enter" onclick="tryUnlock()">Entrar</button>
+  <div class="lock-error" id="lockErr">Senha incorreta. Verifique o cartão do kit.</div>
+</div>
+
+<!-- CONTEÚDO EXCLUSIVO -->
+<div id="contentScreen">
+
+  <div class="content-brand">Dalme Brasil · Conteúdo exclusivo</div>
+  <h1 class="content-title">Kit Copa do Mundo</h1>
+  <p class="content-sub">Realidade aumentada · Edição 2026</p>
+
+  <!-- Como usar -->
+  <div class="section-wrap">
+    <div class="section-label">Como usar</div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-text">Imprima a âncora e coloque no drinque</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-text">Escaneie um QR Code com a câmera do celular</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-text">Mire na âncora e veja a animação de RA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Âncora -->
+  <div class="section-wrap">
+    <div class="section-label">Âncora — imprima antes</div>
+    <div class="anchor-card">
+      <div class="anchor-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/><path d="M12 10v12M5 13c0 3.87 3.13 7 7 7s7-3.13 7-7"/></svg>
+      </div>
+      <div class="anchor-info">
+        <div class="anchor-name">Âncora do kit Copa</div>
+        <div class="anchor-desc">Obrigatório imprimir para a RA funcionar</div>
+        <!-- Troque o href pelo link real do PNG da âncora -->
+        <a class="btn-dl" href="#" download>
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar PNG
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR Codes de RA -->
+  <div class="section-wrap">
+    <div class="section-label">QR Codes de realidade aumentada</div>
+    <div class="qr-list" id="qrList">
+
+      <!-- QR 1 -->
+      <div class="qr-card">
+        <!-- Quando tiver o PNG real, troque o div.qr-placeholder por: <img class="qr-img" src="URL_DO_QR1.png"> -->
+        <div class="qr-placeholder">QR<br>CODE</div>
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">Mascote 1</div>
+          <div class="qr-actions">
+            <!-- Troque o href pelo link real do PNG -->
+            <a class="btn-dl" href="#" download>
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR 2 -->
+      <div class="qr-card">
+        <div class="qr-placeholder">QR<br>CODE</div>
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">Mascote 2</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="#" download>
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- QR 3 -->
+      <div class="qr-card">
+        <div class="qr-placeholder">QR<br>CODE</div>
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">Mascote 3</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="#" download>
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!--
+      ═══════════════════════════════════════════════════════
+      PARA ADICIONAR NOVO QR CODE (Dia dos Namorados, Natal...)
+      Copie o bloco abaixo, cole aqui e preencha os dados:
+
+      <div class="qr-card">
+        <div class="qr-placeholder">QR<br>CODE</div>
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">NOME DA ANIMAÇÃO</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="URL_DO_PNG" download>
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+      ═══════════════════════════════════════════════════════
+      -->
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Carta de drinks -->
+  <div class="section-wrap">
+    <div class="section-label">Carta de drinks</div>
+    <a class="carta-link" href="https://dvd157.github.io/dalme-copa/" target="_blank">
+      <div class="carta-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/><circle cx="12" cy="12" r="3"/></svg>
+      </div>
+      <div>
+        <div class="carta-name">Carta de drinks Copa 2026</div>
+        <div class="carta-desc">Toque para acessar a carta completa</div>
+      </div>
+      <div class="carta-arrow">›</div>
+    </a>
+  </div>
+
+  <div class="footer">Dalme Brasil · Sorocaba/SP · Conteúdo exclusivo para clientes</div>
+
+</div>
+
+<script>
+  const SENHA = 'copa2026';
+
+  function tryUnlock() {
+    const val = document.getElementById('pw').value;
+    const err = document.getElementById('lockErr');
+    if (val === SENHA) {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('contentScreen').style.display = 'block';
+      window.scrollTo(0, 0);
+    } else {
+      err.style.display = 'block';
+      document.getElementById('pw').value = '';
+      document.getElementById('pw').focus();
+    }
+  }
+
+  document.getElementById('pw').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock();
+  });
+</script>
+
+</body>
+</html>
