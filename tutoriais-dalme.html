@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Área Exclusiva de Clientes | Dalme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#14110c;
+    --surface:#1e1810;
+    --surface-2:#241d12;
+    --line:#3a3022;
+    --gold:#c9a24b;
+    --gold-bright:#e8c468;
+    --cream:#f2e9d8;
+    --muted:#9c8f73;
+    --error:#c4654a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Manrope',sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  .bg-pattern{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0 38px, var(--line) 38px 39px),
+      repeating-linear-gradient(25deg, transparent 0 64px, var(--line) 64px 65px);
+    mask-image: radial-gradient(circle at 50% 35%, black 0%, transparent 70%);
+  }
+
+  /* ---------- LOCK SCREEN ---------- */
+  #lock{
+    position:relative; z-index:1;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:32px 20px;
+  }
+  .lock-card{
+    width:100%; max-width:400px;
+    background:linear-gradient(180deg, var(--surface), var(--surface-2));
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:44px 36px 36px;
+    text-align:center;
+  }
+  .seal{
+    width:56px; height:56px; margin:0 auto 22px;
+    border:1px solid var(--gold); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .seal svg{width:26px; height:26px;}
+  .eyebrow{
+    font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--gold); margin-bottom:10px; font-weight:600;
+  }
+  h1{
+    font-family:'Fraunces',serif; font-weight:500; font-size:26px;
+    line-height:1.25; margin:0 0 10px; color:var(--cream);
+  }
+  .lock-sub{
+    font-size:14px; color:var(--muted); line-height:1.6; margin:0 0 30px;
+  }
+  form{ text-align:left; }
+  label{
+    display:block; font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:7px; font-weight:600;
+  }
+  .field{ margin-bottom:18px; }
+  input[type=email], input[type=password]{
+    width:100%; background:var(--bg); border:1px solid var(--line);
+    color:var(--cream); font-family:'Manrope',sans-serif; font-size:15px;
+    padding:13px 14px; border-radius:3px; outline:none;
+    transition:border-color .15s ease;
+  }
+  input[type=email]:focus, input[type=password]:focus{ border-color:var(--gold); }
+  button{
+    width:100%; background:var(--gold); color:#15110a; border:none;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:14px;
+    letter-spacing:.04em; text-transform:uppercase;
+    padding:14px; border-radius:3px; cursor:pointer; margin-top:6px;
+    transition:background .15s ease;
+  }
+  button:hover{ background:var(--gold-bright); }
+  .error-msg{
+    color:var(--error); font-size:13px; margin-top:14px; text-align:center;
+    display:none;
+  }
+  .error-msg.show{ display:block; }
+  .shake{ animation:shake .35s; }
+  @keyframes shake{
+    0%,100%{transform:translateX(0);}
+    25%{transform:translateX(-6px);}
+    75%{transform:translateX(6px);}
+  }
+
+  /* ---------- CONTENT ---------- */
+  #content{ display:none; position:relative; z-index:1; }
+  .topbar{
+    border-bottom:1px solid var(--line);
+    padding:18px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:10px;
+  }
+  .topbar .brand{ font-family:'Fraunces',serif; font-size:18px; color:var(--gold); letter-spacing:.02em; }
+  .topbar .who{ font-size:13px; color:var(--muted); }
+  .wrap{ max-width:880px; margin:0 auto; padding:48px 24px 80px; }
+  .wrap h2{
+    font-family:'Fraunces',serif; font-weight:500; font-size:28px; margin:0 0 8px;
+  }
+  .wrap > p.lead{ color:var(--muted); font-size:14px; margin:0 0 40px; line-height:1.6; }
+  .product-block{ margin-bottom:48px; }
+  .product-head{ display:flex; gap:14px; align-items:baseline; margin-bottom:16px; }
+  .product-head .idx{
+    font-family:'Fraunces',serif; color:var(--gold); font-size:14px; flex-shrink:0;
+  }
+  .product-title{ margin:0 0 4px; font-size:18px; font-weight:600; }
+  .product-head p{ margin:0; font-size:13px; color:var(--muted); line-height:1.5; }
+  .video-card{
+    border:1px solid var(--line); border-radius:4px; overflow:hidden;
+    background:var(--surface);
+  }
+  .video-frame{ position:relative; width:100%; padding-top:56.25%; background:#000; }
+  .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .obs-box{
+    margin-top:14px; padding:13px 16px; border-left:2px solid var(--gold);
+    background:var(--surface); font-size:13px; color:var(--cream); line-height:1.6;
+  }
+  .promo-box{
+    margin-top:10px; padding:13px 16px; border-radius:3px;
+    background:rgba(201,162,75,.1); border:1px dashed var(--gold);
+    font-size:13px; color:var(--gold-bright); line-height:1.6; text-align:center;
+  }
+  .footer-note{
+    margin-top:46px; padding-top:24px; border-top:1px solid var(--line);
+    font-size:13px; color:var(--muted); line-height:1.7;
+  }
+  .footer-note a{ color:var(--gold); text-decoration:none; }
+  .footer-note a:hover{ text-decoration:underline; }
+
+  @media (max-width:480px){
+    .lock-card{ padding:34px 24px 28px; }
+    h1{ font-size:22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<!-- ============ TELA DE LOGIN ============ -->
+<div id="lock">
+  <div class="lock-card">
+    <div class="seal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c9a24b" stroke-width="1.4">
+        <path d="M12 2 L20 6 V12 C20 17 16.5 20.5 12 22 C7.5 20.5 4 17 4 12 V6 Z"/>
+        <path d="M9 12 L11 14 L15 9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="eyebrow">Conteúdo exclusivo</div>
+    <h1>Área de Tutoriais Dalme</h1>
+    <p class="lock-sub">Acesso reservado a clientes. Informe seu email e a senha enviada junto com seu produto.</p>
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label for="email">Seu email</label>
+        <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+      </div>
+      <div class="field">
+        <label for="password">Senha de acesso</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+      <button type="submit">Acessar tutoriais</button>
+      <div class="error-msg" id="errorMsg">Senha incorreta. Verifique e tente novamente.</div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ CONTEÚDO LIBERADO ============ -->
+<div id="content">
+  <div class="topbar">
+    <div class="brand">DALME</div>
+    <div class="who" id="whoGreeting"></div>
+  </div>
+
+  <div class="wrap">
+    <h2>Seus tutoriais</h2>
+    <p class="lead">Vídeos passo a passo para tirar o máximo proveito do seu equipamento. Conteúdo exclusivo para clientes — pedimos que não compartilhe este acesso.</p>
+
+    <!-- ===== PRODUTO 1: MINI IMPRESSORA DALME ===== -->
+    <div class="product-block">
+      <div class="product-head">
+        <span class="idx">01</span>
+        <div>
+          <h3 class="product-title">Mini Impressora Dalme</h3>
+          <p>Aqui está o link com os vídeos tutoriais de como usar a impressora.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/videoseries?list=PL0lLqEevGMQ4V4Fm6-BaQtIbImah5K4td" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="obs-box">
+        <strong>OBS:</strong> assista a todos os vídeos tutoriais e leia a legenda de cada vídeo.
+      </div>
+      <div class="promo-box">
+        Marque a gente no Instagram e ganhe descontos em compras 🙏🏻❤️
+      </div>
+    </div>
+
+    <!-- ===== PRODUTO 2: MÁQUINA DALME (e acessórios) ===== -->
+    <div class="product-block">
+      <div class="product-head">
+        <span class="idx">02</span>
+        <div>
+          <h3 class="product-title">Máquina Dalme e acessórios</h3>
+          <p>Tutorial completo de como usar a Máquina Dalme e todos os seus acessórios. O vídeo está separado por capítulo para facilitar.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-frame">
+          <iframe src="https://www.youtube.com/embed/O9Kz7tjvkcw" loading="lazy" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="obs-box">
+        <strong>Muito importante:</strong> assista para extrair o melhor das suas funções.
+      </div>
+      <div class="promo-box">
+        Marcou, ganhou! Marque a página Dalme nas suas publicações e ganhe um fluido extra na sua próxima compra 🥳
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Dúvidas e suporte técnico, entre em contato: <a href="https://wa.me/5515981620277" target="_blank" rel="noopener">+55 (15) 98162-0277</a>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   COMO EDITAR ESTA PÁGINA (David — leia antes de publicar)
+   =========================================================================
+
+   1) TROCAR A SENHA
+      A senha não fica em texto puro no código — fica como um "hash".
+      Senha atual: Dalmeclientes
+
+      Para trocar, abra o Console do navegador (F12 → aba Console) em
+      QUALQUER site, cole e rode:
+
+          crypto.subtle.digest("SHA-256", new TextEncoder().encode("SUA_NOVA_SENHA"))
+            .then(buf => console.log(Array.from(new Uint8Array(buf))
+              .map(b => b.toString(16).padStart(2,"0")).join("")))
+
+      Copie o texto que aparecer e substitua o valor de PASSWORD_HASH abaixo.
+
+   2) ADICIONAR/TROCAR PRODUTOS E VÍDEOS
+      Cada produto é um bloco <div class="product-block"> no HTML acima.
+      - Para um produto com PLAYLIST: o iframe usa
+        .../embed/videoseries?list=ID_DA_PLAYLIST
+        (o ID da playlist é a parte depois de "list=" no link do YouTube)
+      - Para um produto com 1 VÍDEO ÚNICO: o iframe usa
+        .../embed/ID_DO_VIDEO
+        (o ID é a parte depois de "youtu.be/" ou "v=" no link)
+      Para adicionar um 3º produto, copie um bloco inteiro
+      <div class="product-block">...</div> e cole antes do <div class="footer-note">.
+
+   3) PUBLICAR
+      Suba este arquivo no mesmo repositório GitHub Pages que você já usa
+      (ex: dvd157.github.io/tutoriais-dalme.html), do mesmo jeito que fez
+      com a página do kit-copa.
+
+   IMPORTANTE — limite real desta proteção:
+   Isso impede acesso casual (quem não tem a senha não entra), mas não é
+   uma trava de segurança real: a senha em si pode ser repassada por quem
+   já é cliente, igual aconteceria com qualquer senha única compartilhada.
+   Se um dia o vazamento virar problema sério, o próximo passo é vincular
+   o acesso à conta de cada cliente (login individual) em vez de uma senha
+   genérica — me chama que a gente monta isso.
+   ========================================================================= */
+
+  const PASSWORD_HASH = "7fbe5809682fc24f3efaa9b7896dfdb88deeb609598b756432b2b927d4dcb81d";
+  // ^ corresponde a "Dalmeclientes"
+
+  const lockEl = document.getElementById('lock');
+  const contentEl = document.getElementById('content');
+  const form = document.getElementById('loginForm');
+  const errorMsg = document.getElementById('errorMsg');
+  const whoGreeting = document.getElementById('whoGreeting');
+
+  async function sha256Hex(text){
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
+  }
+
+  function unlock(email){
+    lockEl.style.display = 'none';
+    contentEl.style.display = 'block';
+    whoGreeting.textContent = email ? ('Acesso liberado — ' + email) : '';
+    sessionStorage.setItem('dalme_unlocked', '1');
+    sessionStorage.setItem('dalme_email', email || '');
+  }
+
+  // já desbloqueado nesta aba/sessão?
+  if (sessionStorage.getItem('dalme_unlocked') === '1') {
+    unlock(sessionStorage.getItem('dalme_email'));
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    const pass = document.getElementById('password').value;
+    const hash = await sha256Hex(pass);
+
+    if (hash === PASSWORD_HASH) {
+      errorMsg.classList.remove('show');
+      unlock(email);
+    } else {
+      errorMsg.classList.add('show');
+      const card = document.querySelector('.lock-card');
+      card.classList.remove('shake');
+      void card.offsetWidth;
+      card.classList.add('shake');
+    }
+  });
+</script>
+
+</body>
+</html>
