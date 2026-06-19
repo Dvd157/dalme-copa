@@ -117,6 +117,31 @@
   }
   .wrap > p.lead{ color:var(--muted); font-size:14px; margin:0 0 40px; line-height:1.6; }
   .product-block{ margin-bottom:48px; }
+  .product-view{ display:none; }
+  .back-btn{
+    background:none; border:none; color:var(--gold); font-family:'Manrope',sans-serif;
+    font-size:13px; font-weight:600; cursor:pointer; padding:0 0 22px; letter-spacing:.02em;
+  }
+  .back-btn:hover{ color:var(--gold-bright); }
+  .selector-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-top:8px;
+  }
+  .selector-card{
+    border:1px solid var(--line); border-radius:4px; background:var(--surface);
+    padding:32px 20px; text-align:center; cursor:pointer;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .selector-card:hover{ border-color:var(--gold); transform:translateY(-2px); }
+  .selector-photo{
+    width:100%; aspect-ratio:4/3; margin:0 0 18px; border:1px solid var(--line);
+    border-radius:4px; overflow:hidden; background:#0d0b07;
+  }
+  .selector-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .selector-card h3{ margin:0 0 8px; font-size:16px; font-weight:600; }
+  .selector-cta{ font-size:12px; color:var(--gold); letter-spacing:.04em; }
+  @media (max-width:520px){
+    .selector-grid{ grid-template-columns:1fr; }
+  }
   .product-head{ display:flex; gap:14px; align-items:baseline; margin-bottom:16px; }
   .product-head .idx{
     font-family:'Fraunces',serif; color:var(--gold); font-size:14px; flex-shrink:0;
@@ -190,50 +215,77 @@
   </div>
 
   <div class="wrap">
-    <h2>Seus tutoriais</h2>
-    <p class="lead">Vídeos passo a passo para tirar o máximo proveito do seu equipamento. Conteúdo exclusivo para clientes — pedimos que não compartilhe este acesso.</p>
+    <!-- ===== TELA DE SELEÇÃO ===== -->
+    <div id="selectorView">
+      <h2>Seus tutoriais</h2>
+      <p class="lead">Selecione o produto que você adquiriu para ver o tutorial correspondente.</p>
 
-    <!-- ===== PRODUTO 1: MINI IMPRESSORA DALME ===== -->
-    <div class="product-block">
-      <div class="product-head">
-        <span class="idx">01</span>
-        <div>
-          <h3 class="product-title">Mini Impressora Dalme</h3>
-          <p>Aqui está o link com os vídeos tutoriais de como usar a impressora.</p>
+      <div class="selector-grid">
+        <div class="selector-card" onclick="showProduct('product1')">
+          <div class="selector-photo">
+            <img src="mini-impressora.jpg" alt="Mini Impressora Dalme">
+          </div>
+          <h3>Mini Impressora Dalme</h3>
+          <span class="selector-cta">Ver tutorial →</span>
         </div>
-      </div>
-      <div class="video-card">
-        <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PL0lLqEevGMQ6O_0fsa6jA6zJ4AuUMG3Bd" loading="lazy" allowfullscreen></iframe>
+
+        <div class="selector-card" onclick="showProduct('product2')">
+          <div class="selector-photo">
+            <img src="pistola-bolhas.jpg" alt="Pistola de Bolhas Dalme">
+          </div>
+          <h3>Pistola de Bolhas Dalme</h3>
+          <span class="selector-cta">Ver tutorial →</span>
         </div>
-      </div>
-      <div class="obs-box">
-        <strong>OBS:</strong> assista a todos os vídeos tutoriais e leia a legenda de cada vídeo.
-      </div>
-      <div class="promo-box">
-        Marque a gente no Instagram e ganhe descontos em compras 🙏🏻❤️
       </div>
     </div>
 
-    <!-- ===== PRODUTO 2: MÁQUINA DALME (e acessórios) ===== -->
-    <div class="product-block">
-      <div class="product-head">
-        <span class="idx">02</span>
-        <div>
-          <h3 class="product-title">Pistola de Bolhas Dalme e acessórios</h3>
-          <p>Tutorial completo de como usar a Pistola de Bolhas Dalme e todos os seus acessórios. O vídeo está separado por capítulo para facilitar.</p>
+    <!-- ===== PRODUTO 1: MINI IMPRESSORA DALME ===== -->
+    <div class="product-view" id="product1">
+      <button class="back-btn" onclick="showSelector()">← Voltar</button>
+      <div class="product-block">
+        <div class="product-head">
+          <span class="idx">01</span>
+          <div>
+            <h3 class="product-title">Mini Impressora Dalme</h3>
+            <p>Aqui está o link com os vídeos tutoriais de como usar a impressora.</p>
+          </div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/videoseries?list=PL0lLqEevGMQ6O_0fsa6jA6zJ4AuUMG3Bd" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="obs-box">
+          <strong>OBS:</strong> assista a todos os vídeos tutoriais e leia a legenda de cada vídeo.
+        </div>
+        <div class="promo-box">
+          Marque a gente no Instagram e ganhe descontos em compras 🙏🏻❤️
         </div>
       </div>
-      <div class="video-card">
-        <div class="video-frame">
-          <iframe src="https://www.youtube.com/embed/d8z1rxWCF8E" loading="lazy" allowfullscreen></iframe>
+    </div>
+
+    <!-- ===== PRODUTO 2: PISTOLA DE BOLHAS DALME ===== -->
+    <div class="product-view" id="product2">
+      <button class="back-btn" onclick="showSelector()">← Voltar</button>
+      <div class="product-block">
+        <div class="product-head">
+          <span class="idx">02</span>
+          <div>
+            <h3 class="product-title">Pistola de Bolhas Dalme e acessórios</h3>
+            <p>Tutorial completo de como usar a Pistola de Bolhas Dalme e todos os seus acessórios. O vídeo está separado por capítulo para facilitar.</p>
+          </div>
         </div>
-      </div>
-      <div class="obs-box">
-        <strong>Muito importante:</strong> assista para extrair o melhor das suas funções.
-      </div>
-      <div class="promo-box">
-        Marcou, ganhou! Marque a página Dalme nas suas publicações e ganhe um fluido extra na sua próxima compra 🥳
+        <div class="video-card">
+          <div class="video-frame">
+            <iframe src="https://www.youtube.com/embed/d8z1rxWCF8E" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="obs-box">
+          <strong>Muito importante:</strong> assista para extrair o melhor das suas funções.
+        </div>
+        <div class="promo-box">
+          Marcou, ganhou! Marque a página Dalme nas suas publicações e ganhe um fluido extra na sua próxima compra 🥳
+        </div>
       </div>
     </div>
 
@@ -306,6 +358,20 @@
     whoGreeting.textContent = email ? ('Acesso liberado — ' + email) : '';
     sessionStorage.setItem('dalme_unlocked', '1');
     sessionStorage.setItem('dalme_email', email || '');
+    showSelector();
+  }
+
+  function showProduct(id){
+    document.getElementById('selectorView').style.display = 'none';
+    document.querySelectorAll('.product-view').forEach(v => v.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function showSelector(){
+    document.querySelectorAll('.product-view').forEach(v => v.style.display = 'none');
+    document.getElementById('selectorView').style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
   }
 
   // já desbloqueado nesta aba/sessão?
