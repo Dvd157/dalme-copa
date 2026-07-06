@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dalme AR Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8CC80;
+    --dark: #0D0D0D;
+    --dark2: #141414;
+    --dark3: #1C1C1C;
+    --border: rgba(201,168,76,0.2);
+    --border-strong: rgba(201,168,76,0.5);
+    --text: #F0EDE6;
+    --text-muted: #8A8070;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  /* ── TELA DE SENHA ── */
+  #lockScreen {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .lock-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+
+  .lock-ornament {
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+  }
+
+  .lock-ornament svg {
+    width: 24px; height: 24px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lock-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .lock-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+  }
+
+  .pw-input {
+    width: 100%;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 14px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    letter-spacing: 8px;
+    text-align: center;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+
+  .pw-input:focus { border-color: var(--gold); }
+  .pw-input::placeholder { letter-spacing: 4px; color: var(--text-muted); font-size: 14px; }
+
+  .btn-enter {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 13px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-enter:hover { background: rgba(201,168,76,0.08); }
+
+  .lock-error {
+    font-size: 12px;
+    color: #C05050;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    display: none;
+  }
+
+  /* ── CONTEÚDO ── */
+  #contentScreen {
+    display: none;
+    width: 100%;
+    max-width: 480px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .content-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .content-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .content-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Como usar */
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 2.5rem;
+  }
+
+  .how-step {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 10px;
+    text-align: center;
+  }
+
+  .how-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .how-text {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ── SEÇÃO DE EVENTO ── */
+  .event-section {
+    margin-bottom: 2.5rem;
+  }
+
+  .event-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .event-icon {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 15px;
+  }
+
+  .event-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    color: var(--text);
+  }
+
+  .event-tag {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3px 8px;
+  }
+
+  /* Âncora */
+  .anchor-card {
+    background: var(--dark2);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .anchor-img {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--border-strong);
+  }
+
+  .anchor-placeholder {
+    width: 56px;
+    height: 56px;
+    border-radius: 6px;
+    background: var(--dark3);
+    border: 1px dashed var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .anchor-info { flex: 1; }
+
+  .anchor-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+
+  .anchor-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  .anchor-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .btn-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .btn-dl:hover { background: rgba(201,168,76,0.08); }
+
+  .btn-dl svg {
+    width: 12px; height: 12px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* QR Cards */
+  .qr-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .qr-card {
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .qr-card:hover { border-color: var(--border-strong); }
+
+  .qr-img {
+    width: 54px;
+    height: 54px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .qr-placeholder {
+    width: 54px;
+    height: 54px;
+    background: var(--dark3);
+    border: 1px dashed var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .qr-info { flex: 1; min-width: 0; }
+
+  .qr-badge {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+
+  .qr-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  /* Em breve */
+  .coming-soon {
+    background: var(--dark2);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    padding: 18px;
+    text-align: center;
+  }
+
+  .coming-soon-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  /* Carta de drinks */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .carta-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--dark2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    text-decoration: none;
+    transition: border-color 0.2s;
+  }
+
+  .carta-link:hover { border-color: var(--gold); }
+
+  .carta-icon {
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .carta-icon svg {
+    width: 18px; height: 18px;
+    stroke: var(--gold); fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .carta-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .carta-desc { font-size: 11px; color: var(--text-muted); }
+
+  .carta-arrow {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .footer {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 1.5rem 0 0.5rem;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── TELA DE SENHA ── -->
+<div id="lockScreen">
+  <div class="lock-brand">Dalme Brasil</div>
+
+  <div class="lock-ornament">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  </div>
+
+  <h1 class="lock-title">Dalme AR Experience</h1>
+  <p class="lock-sub">Área exclusiva · Realidade aumentada</p>
+
+  <input class="pw-input" type="password" id="pw" placeholder="senha" maxlength="20" autocomplete="off">
+  <button class="btn-enter" onclick="tryUnlock()">Entrar</button>
+  <div class="lock-error" id="lockErr">Senha incorreta. Verifique o cartão do kit.</div>
+</div>
+
+<!-- ── CONTEÚDO ── -->
+<div id="contentScreen">
+
+  <div class="content-brand">Dalme Brasil</div>
+  <h1 class="content-title">Dalme AR Experience</h1>
+  <p class="content-sub">Realidade aumentada para bares &amp; restaurantes</p>
+
+  <!-- Como usar -->
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">1</div>
+      <div class="how-text">Imprima a âncora do evento e coloque no drinque</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">2</div>
+      <div class="how-text">Imprima ou escaneie o QR Code com a câmera do celular</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">3</div>
+      <div class="how-text">Mire na âncora e veja a animação de RA ao vivo</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SEÇÃO: DIA DOS NAMORADOS
+  ══════════════════════════════════════ -->
+  <div class="event-section">
+    <div class="event-header">
+      <div class="event-icon">💑</div>
+      <div class="event-title">Dia dos Namorados</div>
+      <div class="event-tag">Ativo</div>
+    </div>
+
+    <!-- Âncora -->
+    <div class="anchor-card">
+      <!-- Substitua pelo arquivo de âncora do Dia dos Namorados quando disponível -->
+      <img class="anchor-img" src="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ancoracopa.jpg" alt="Âncora Dia dos Namorados">
+      <div class="anchor-info">
+        <div class="anchor-label">Âncora — imprima antes</div>
+        <div class="anchor-name">Âncora Namorados</div>
+        <div class="anchor-desc">Obrigatório imprimir para a RA funcionar</div>
+        <a class="btn-dl" href="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ancoracopa.jpg" download="ancora-namorados.jpg">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar âncora
+        </a>
+      </div>
+    </div>
+
+    <!-- QR Codes -->
+    <div class="qr-list">
+      <div class="qr-card">
+        <img class="qr-img" src="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/love.png" alt="QR Code Brinde">
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">Brinde</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/love.png" download="qr-brinde-namorados.png">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!--
+      ═══════════════════════════════════════════════════
+      PARA ADICIONAR MAIS QR CODES — DIA DOS NAMORADOS
+      Copie este bloco, cole acima e preencha:
+
+      <div class="qr-card">
+        <img class="qr-img" src="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ARQUIVO.png" alt="NOME">
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">NOME DA ANIMAÇÃO</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ARQUIVO.png" download="qr-NOME.png">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+      ═══════════════════════════════════════════════════
+      -->
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SEÇÃO: DIA DOS PAIS
+  ══════════════════════════════════════ -->
+  <div class="event-section">
+    <div class="event-header">
+      <div class="event-icon">👨</div>
+      <div class="event-title">Dia dos Pais</div>
+      <div class="event-tag" style="color:var(--text-muted);border-color:rgba(138,128,112,0.3)">Em breve</div>
+    </div>
+    <div class="coming-soon">
+      <div class="coming-soon-text">Conteúdo em preparação — em breve disponível aqui</div>
+    </div>
+
+    <!--
+    ═══════════════════════════════════════════════════
+    QUANDO TIVER OS ARQUIVOS — SUBSTITUA O coming-soon
+    PELO BLOCO ABAIXO E PREENCHA:
+
+    <div class="anchor-card">
+      <img class="anchor-img" src="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ANCORA-PAIS.jpg" alt="Âncora Dia dos Pais">
+      <div class="anchor-info">
+        <div class="anchor-label">Âncora — imprima antes</div>
+        <div class="anchor-name">Âncora Dia dos Pais</div>
+        <div class="anchor-desc">Obrigatório imprimir para a RA funcionar</div>
+        <a class="btn-dl" href="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ANCORA-PAIS.jpg" download="ancora-pais.jpg">
+          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Baixar âncora
+        </a>
+      </div>
+    </div>
+    <div class="qr-list">
+      <div class="qr-card">
+        <img class="qr-img" src="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ARQUIVO-PAIS.png" alt="QR Dia dos Pais">
+        <div class="qr-info">
+          <div class="qr-badge">Realidade aumentada</div>
+          <div class="qr-name">NOME DA ANIMAÇÃO</div>
+          <div class="qr-actions">
+            <a class="btn-dl" href="https://raw.githubusercontent.com/Dvd157/dalme-copa/main/ARQUIVO-PAIS.png" download="qr-pais.png">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Baixar PNG
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    ═══════════════════════════════════════════════════
+    -->
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SEÇÃO: NATAL
+  ══════════════════════════════════════ -->
+  <div class="event-section">
+    <div class="event-header">
+      <div class="event-icon">🎄</div>
+      <div class="event-title">Natal</div>
+      <div class="event-tag" style="color:var(--text-muted);border-color:rgba(138,128,112,0.3)">Em breve</div>
+    </div>
+    <div class="coming-soon">
+      <div class="coming-soon-text">Conteúdo em preparação — em breve disponível aqui</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       SEÇÃO: REVEILLON
+  ══════════════════════════════════════ -->
+  <div class="event-section">
+    <div class="event-header">
+      <div class="event-icon">🥂</div>
+      <div class="event-title">Réveillon</div>
+      <div class="event-tag" style="color:var(--text-muted);border-color:rgba(138,128,112,0.3)">Em breve</div>
+    </div>
+    <div class="coming-soon">
+      <div class="coming-soon-text">Conteúdo em preparação — em breve disponível aqui</div>
+    </div>
+  </div>
+
+  <!--
+  ═══════════════════════════════════════════════════
+  PARA ADICIONAR NOVO EVENTO (Dia das Mães, Halloween...)
+  Copie o bloco abaixo completo e cole acima do divider:
+
+  <div class="event-section">
+    <div class="event-header">
+      <div class="event-icon">EMOJI</div>
+      <div class="event-title">NOME DO EVENTO</div>
+      <div class="event-tag">Ativo</div>
+    </div>
+    [âncora + qr-list aqui]
+  </div>
+  ═══════════════════════════════════════════════════
+  -->
+
+  <hr class="divider">
+
+  <!-- Carta de drinks -->
+  <div class="section-label">Carta de drinks</div>
+  <a class="carta-link" href="https://dvd157.github.io/dalme-copa/" target="_blank">
+    <div class="carta-icon">
+      <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m8 0h3a2 2 0 0 0 2-2v-3"/><circle cx="12" cy="12" r="3"/></svg>
+    </div>
+    <div>
+      <div class="carta-name">Carta de drinks</div>
+      <div class="carta-desc">Toque para acessar a carta completa</div>
+    </div>
+    <div class="carta-arrow">›</div>
+  </a>
+
+  <div class="footer">Dalme Brasil · Sorocaba/SP · Conteúdo exclusivo para clientes</div>
+
+</div>
+
+<script>
+  const SENHA = 'dalmeAR';
+
+  function tryUnlock() {
+    const val = document.getElementById('pw').value;
+    const err = document.getElementById('lockErr');
+    if (val === SENHA) {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('contentScreen').style.display = 'block';
+      window.scrollTo(0, 0);
+    } else {
+      err.style.display = 'block';
+      document.getElementById('pw').value = '';
+      document.getElementById('pw').focus();
+    }
+  }
+
+  document.getElementById('pw').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') tryUnlock();
+  });
+</script>
+
+</body>
+</html>
