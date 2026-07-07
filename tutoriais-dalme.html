@@ -456,15 +456,6 @@
   const PASSWORD_HASH = "7fbe5809682fc24f3efaa9b7896dfdb88deeb609598b756432b2b927d4dcb81d";
   // ^ corresponde a "Dalmeclientes"
 
-  const APPROVED_EMAIL_HASHES = [
-    // cole aqui os hashes dos emails autorizados, um por linha, entre aspas e com vírgula
-    // exemplo: "a1b2c3d4e5...",
-  ];
-
-  function normalizeEmail(email){
-    return email.trim().toLowerCase();
-  }
-
   const lockEl = document.getElementById('lock');
   const contentEl = document.getElementById('content');
   const form = document.getElementById('loginForm');
@@ -523,23 +514,15 @@
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
-    const emailRaw = document.getElementById('email').value;
-    const emailNorm = normalizeEmail(emailRaw);
+    const email = document.getElementById('email').value.trim();
     const pass = document.getElementById('password').value;
-
-    const emailHash = await sha256Hex(emailNorm);
     const passHash = await sha256Hex(pass);
 
-    const emailOk = APPROVED_EMAIL_HASHES.includes(emailHash);
-    const passOk = passHash === PASSWORD_HASH;
-
-    if (emailOk && passOk) {
+    if (passHash === PASSWORD_HASH) {
       errorMsg.classList.remove('show');
-      unlock(emailRaw.trim());
+      unlock(email);
     } else {
-      errorMsg.textContent = !emailOk
-        ? 'Email não autorizado. Verifique se digitou o mesmo email enviado na sua compra.'
-        : 'Senha incorreta. Verifique e tente novamente.';
+      errorMsg.textContent = 'Senha incorreta. Verifique e tente novamente.';
       errorMsg.classList.add('show');
       const card = document.querySelector('.lock-card');
       card.classList.remove('shake');
