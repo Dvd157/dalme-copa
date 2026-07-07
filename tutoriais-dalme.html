@@ -116,7 +116,52 @@
     font-family:'Fraunces',serif; font-weight:500; font-size:28px; margin:0 0 8px;
   }
   .wrap > p.lead{ color:var(--muted); font-size:14px; margin:0 0 40px; line-height:1.6; }
-  .product-block{ margin-bottom:48px; }
+  /* grid de miniaturas */
+  .thumb-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:16px;
+  }
+  .thumb-grid.single{ grid-template-columns:repeat(2,1fr); }
+  .thumb-item{ cursor:pointer; }
+  .thumb-img{
+    position:relative; width:100%; padding-top:56.25%;
+    border-radius:4px; overflow:hidden; border:1px solid var(--line);
+    background:#000;
+  }
+  .thumb-img img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    transition:opacity .2s;
+  }
+  .thumb-item:hover .thumb-img img{ opacity:.75; }
+  .play-btn{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:24px; color:#fff; text-shadow:0 0 12px rgba(0,0,0,.8);
+    opacity:0; transition:opacity .2s;
+  }
+  .thumb-item:hover .play-btn{ opacity:1; }
+  .thumb-item span{
+    display:block; font-size:12px; color:var(--muted); margin-top:6px;
+    line-height:1.4; padding:0 2px;
+  }
+  /* modal */
+  #videoModal{
+    display:none; position:fixed; inset:0; z-index:100;
+    background:rgba(0,0,0,.85); align-items:center; justify-content:center;
+    padding:20px;
+  }
+  #videoModal.open{ display:flex; }
+  .modal-inner{
+    position:relative; width:100%; max-width:800px;
+  }
+  .modal-close{
+    position:absolute; top:-36px; right:0; background:none; border:none;
+    color:#fff; font-size:20px; cursor:pointer; padding:4px 8px;
+  }
+  .modal-frame{ position:relative; width:100%; padding-top:56.25%; background:#000; border-radius:4px; overflow:hidden; }
+  .modal-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  @media(max-width:600px){
+    .thumb-grid{ grid-template-columns:repeat(2,1fr); }
+    .thumb-grid.single{ grid-template-columns:1fr; }
+  }
   .product-view{ display:none; }
   .back-btn{
     background:none; border:none; color:var(--gold); font-family:'Manrope',sans-serif;
@@ -247,16 +292,57 @@
           <span class="idx">01</span>
           <div>
             <h3 class="product-title">Mini Impressora Dalme</h3>
-            <p>Aqui está o link com os vídeos tutoriais de como usar a impressora.</p>
+            <p>Clique em qualquer vídeo abaixo para assistir. Assista a todos e leia a legenda de cada um.</p>
           </div>
         </div>
-        <div class="video-card">
-          <div class="video-frame">
-            <iframe src="https://www.youtube.com/embed/videoseries?list=PL0lLqEevGMQ6O_0fsa6jA6zJ4AuUMG3Bd" loading="lazy" allowfullscreen></iframe>
+        <div class="thumb-grid">
+          <div class="thumb-item" onclick="openVideo('4eds_tw8IwE')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/4eds_tw8IwE/mqdefault.jpg" alt="Conferindo as peças"><div class="play-btn">▶</div></div>
+            <span>Conferindo as peças</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('vBBcr7O1Tq8')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/vBBcr7O1Tq8/mqdefault.jpg" alt="Teste de funcionamento"><div class="play-btn">▶</div></div>
+            <span>Teste de funcionamento</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('t46hqFMCu-I')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/t46hqFMCu-I/mqdefault.jpg" alt="Encaixe do cartucho"><div class="play-btn">▶</div></div>
+            <span>Encaixe do cartucho</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('AlOD8h2_gQM')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/AlOD8h2_gQM/mqdefault.jpg" alt="Conectando no Wi-Fi"><div class="play-btn">▶</div></div>
+            <span>Conectando no Wi-Fi ⚠️</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('KuAQHwnvTfs')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/KuAQHwnvTfs/mqdefault.jpg" alt="Utilizando o app"><div class="play-btn">▶</div></div>
+            <span>Utilizando o app</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('Lwj3K1zq_Os')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/Lwj3K1zq_Os/mqdefault.jpg" alt="Como aumentar a imagem"><div class="play-btn">▶</div></div>
+            <span>Como aumentar a imagem</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('DNe5Ip9XpTk')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/DNe5Ip9XpTk/mqdefault.jpg" alt="Imprimindo em drinks"><div class="play-btn">▶</div></div>
+            <span>Imprimindo em drinks ⚠️</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('gLs9vkyDrLk')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/gLs9vkyDrLk/mqdefault.jpg" alt="Nova atualização 1200x1200"><div class="play-btn">▶</div></div>
+            <span>Nova atualização 1200×1200</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('32h5ihklMSw')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/32h5ihklMSw/mqdefault.jpg" alt="Armazenamento do cartucho"><div class="play-btn">▶</div></div>
+            <span>Armazenamento do cartucho</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('CItP9nJg6i0')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/CItP9nJg6i0/mqdefault.jpg" alt="Adicionar fonte no Canva"><div class="play-btn">▶</div></div>
+            <span>Adicionar fonte no Canva</span>
+          </div>
+          <div class="thumb-item" onclick="openVideo('dSX4gsN2Ye8')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/dSX4gsN2Ye8/mqdefault.jpg" alt="Recarga do cartucho"><div class="play-btn">▶</div></div>
+            <span>Recarga do cartucho</span>
           </div>
         </div>
         <div class="obs-box">
-          <strong>OBS:</strong> assista a todos os vídeos tutoriais e leia a legenda de cada vídeo.
+          <strong>OBS:</strong> assista a todos os vídeos e leia a legenda de cada um — há informações importantes nas legendas.
         </div>
         <div class="promo-box">
           Marque a gente no Instagram e ganhe descontos em compras 🙏🏻❤️
@@ -272,12 +358,13 @@
           <span class="idx">02</span>
           <div>
             <h3 class="product-title">Pistola de Bolhas Dalme e acessórios</h3>
-            <p>Tutorial completo de como usar a Pistola de Bolhas Dalme e todos os seus acessórios. O vídeo está separado por capítulo para facilitar.</p>
+            <p>Tutorial completo separado por capítulos. Assista até o final para extrair o melhor das funções.</p>
           </div>
         </div>
-        <div class="video-card">
-          <div class="video-frame">
-            <iframe src="https://www.youtube.com/embed/d8z1rxWCF8E" loading="lazy" allowfullscreen></iframe>
+        <div class="thumb-grid single">
+          <div class="thumb-item" onclick="openVideo('d8z1rxWCF8E')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/d8z1rxWCF8E/mqdefault.jpg" alt="Tutorial Pistola de Bolhas"><div class="play-btn">▶</div></div>
+            <span>Tutorial completo — Pistola de Bolhas</span>
           </div>
         </div>
         <div class="obs-box">
@@ -295,10 +382,38 @@
   </div>
 </div>
 
+<!-- ===== MODAL DE VÍDEO ===== -->
+<div id="videoModal" onclick="closeVideo(event)">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeVideo()">✕</button>
+    <div class="modal-frame">
+      <iframe id="modalIframe" src="" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
 /* =========================================================================
    COMO EDITAR ESTA PÁGINA (David — leia antes de publicar)
    =========================================================================
+
+   0) AUTORIZAR UM NOVO CLIENTE (passo que você vai repetir a cada venda)
+      Agora o acesso exige email autorizado + senha — não basta só a senha.
+      Pra liberar um cliente novo:
+
+      a) Abra o Console do navegador (F12 → aba Console) em QUALQUER site.
+      b) Cole e rode (troque pelo email real do cliente, tudo minúsculo):
+
+          crypto.subtle.digest("SHA-256", new TextEncoder().encode("email-do-cliente@gmail.com"))
+            .then(buf => console.log(Array.from(new Uint8Array(buf))
+              .map(b => b.toString(16).padStart(2,"0")).join("")))
+
+      c) Copie o texto que aparecer (o hash) e adicione uma linha na lista
+         APPROVED_EMAIL_HASHES, lá embaixo no script, assim:
+
+          "o-hash-que-apareceu-aqui",
+
+      d) Suba o arquivo atualizado no GitHub. Pronto, só esse email entra.
 
    1) TROCAR A SENHA
       A senha não fica em texto puro no código — fica como um "hash".
@@ -330,16 +445,25 @@
       com a página do kit-copa.
 
    IMPORTANTE — limite real desta proteção:
-   Isso impede acesso casual (quem não tem a senha não entra), mas não é
-   uma trava de segurança real: a senha em si pode ser repassada por quem
-   já é cliente, igual aconteceria com qualquer senha única compartilhada.
-   Se um dia o vazamento virar problema sério, o próximo passo é vincular
-   o acesso à conta de cada cliente (login individual) em vez de uma senha
-   genérica — me chama que a gente monta isso.
+   Agora o acesso é mais restrito: só entra quem tem um email aprovado por
+   você + a senha certa. Isso reduz bastante o compartilhamento casual,
+   porque exige que o próprio cliente passe o email e a senha da conta dele
+   pra outra pessoa de propósito — a maioria não vai querer fazer isso.
+   Ainda não é 100% à prova de má-fé deliberada (isso só com login real
+   vinculado a sessão única), mas já é um nível bem mais sério de controle.
    ========================================================================= */
 
   const PASSWORD_HASH = "7fbe5809682fc24f3efaa9b7896dfdb88deeb609598b756432b2b927d4dcb81d";
   // ^ corresponde a "Dalmeclientes"
+
+  const APPROVED_EMAIL_HASHES = [
+    // cole aqui os hashes dos emails autorizados, um por linha, entre aspas e com vírgula
+    // exemplo: "a1b2c3d4e5...",
+  ];
+
+  function normalizeEmail(email){
+    return email.trim().toLowerCase();
+  }
 
   const lockEl = document.getElementById('lock');
   const contentEl = document.getElementById('content');
@@ -351,6 +475,24 @@
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,"0")).join("");
   }
+
+  function openVideo(id){
+    document.getElementById('modalIframe').src =
+      'https://www.youtube.com/embed/' + id + '?autoplay=1';
+    document.getElementById('videoModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideo(e){
+    if(e && e.target !== document.getElementById('videoModal') && !e.target.classList.contains('modal-close')) return;
+    document.getElementById('modalIframe').src = '';
+    document.getElementById('videoModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeVideo({target: document.getElementById('videoModal')});
+  });
 
   function unlock(email){
     lockEl.style.display = 'none';
@@ -381,14 +523,23 @@
 
   form.addEventListener('submit', async function(e){
     e.preventDefault();
-    const email = document.getElementById('email').value.trim();
+    const emailRaw = document.getElementById('email').value;
+    const emailNorm = normalizeEmail(emailRaw);
     const pass = document.getElementById('password').value;
-    const hash = await sha256Hex(pass);
 
-    if (hash === PASSWORD_HASH) {
+    const emailHash = await sha256Hex(emailNorm);
+    const passHash = await sha256Hex(pass);
+
+    const emailOk = APPROVED_EMAIL_HASHES.includes(emailHash);
+    const passOk = passHash === PASSWORD_HASH;
+
+    if (emailOk && passOk) {
       errorMsg.classList.remove('show');
-      unlock(email);
+      unlock(emailRaw.trim());
     } else {
+      errorMsg.textContent = !emailOk
+        ? 'Email não autorizado. Verifique se digitou o mesmo email enviado na sua compra.'
+        : 'Senha incorreta. Verifique e tente novamente.';
       errorMsg.classList.add('show');
       const card = document.querySelector('.lock-card');
       card.classList.remove('shake');
