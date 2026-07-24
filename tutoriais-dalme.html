@@ -169,7 +169,7 @@
   }
   .back-btn:hover{ color:var(--gold-bright); }
   .selector-grid{
-    display:grid; grid-template-columns:repeat(2, 1fr); gap:18px; margin-top:8px;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-top:8px;
   }
   .selector-card{
     border:1px solid var(--line); border-radius:4px; background:var(--surface);
@@ -281,6 +281,14 @@
           <h3>Pistola de Bolhas Dalme</h3>
           <span class="selector-cta">Ver tutorial →</span>
         </div>
+
+        <div class="selector-card" onclick="showProduct('product3')">
+          <div class="selector-photo">
+            <img src="https://img.youtube.com/vi/XMsaqFdvhUk/mqdefault.jpg" alt="Dalme Bubble">
+          </div>
+          <h3>Dalme Bubble</h3>
+          <span class="selector-cta">Ver tutorial →</span>
+        </div>
       </div>
     </div>
 
@@ -376,6 +384,32 @@
       </div>
     </div>
 
+    <!-- ===== PRODUTO 3: ALMEIDA BURGER ===== -->
+    <div class="product-view" id="product3">
+      <button class="back-btn" onclick="showSelector()">← Voltar</button>
+      <div class="product-block">
+        <div class="product-head">
+          <span class="idx">03</span>
+          <div>
+            <h3 class="product-title">Dalme Bubble</h3>
+            <p>Tutorial completo do produto. Assista até o final para extrair o melhor das funções.</p>
+          </div>
+        </div>
+        <div class="thumb-grid single">
+          <div class="thumb-item" onclick="openVideo('XMsaqFdvhUk')">
+            <div class="thumb-img"><img src="https://img.youtube.com/vi/XMsaqFdvhUk/mqdefault.jpg" alt="Tutorial Dalme Bubble"><div class="play-btn">▶</div></div>
+            <span>Tutorial — Dalme Bubble</span>
+          </div>
+        </div>
+        <div class="obs-box">
+          <strong>Muito importante:</strong> assista para extrair o melhor das suas funções.
+        </div>
+        <div class="promo-box">
+          Marcou, ganhou! Marque a página Dalme nas suas publicações e ganhe um fluido extra na sua próxima compra 🥳
+        </div>
+      </div>
+    </div>
+
     <div class="footer-note">
       Dúvidas e suporte técnico, entre em contato: <a href="https://wa.me/5515981620277" target="_blank" rel="noopener">+55 (15) 98162-0277</a>
     </div>
@@ -453,8 +487,8 @@
    vinculado a sessão única), mas já é um nível bem mais sério de controle.
    ========================================================================= */
 
-  const PASSWORD_HASH = "7fbe5809682fc24f3efaa9b7896dfdb88deeb609598b756432b2b927d4dcb81d";
-  // ^ corresponde a "Dalmeclientes"
+  const PASSWORD_HASH = "5ddf6469238a142173d20e1e6b4c6f256fb267ab92d3574e142166bfb3a1d9d9";
+  // ^ corresponde a "Dalmeclientes1"
 
   const lockEl = document.getElementById('lock');
   const contentEl = document.getElementById('content');
